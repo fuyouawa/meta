@@ -1,5 +1,17 @@
 #pragma once
 #include <meta/macro/basic.hpp>
+/*--------------------------------------------------
+*                     array                         |
+*                 Public macros                     |
+---------------------------------------------------*/
+
+// Get the number of variable arguments
+#define META_ARG_COUNT(...) INTERNAL_META_ARG_COUNT(__VA_ARGS__)
+// Get the number of array
+#define META_ARRAY_COUNT(array) META_ARG_COUNT(META_ARRAY_ELEMS(array))
+// Get the subarray of an array(0 ~ count)
+#define META_SUB_ARRAY(count, array) INTERNAL_META_RESERVE(count, META_ARRAY_ELEMS(array))
+
 
 
 /*--------------------------------------------------
@@ -96,14 +108,6 @@
 #define INTERNAL_META_RESERVE(count, ...) \
 	META_EXPAND(META_CAT(INTERNAL_META_RESERVE_, count)(__VA_ARGS__))
 
-
-/*--------------------------------------------------
-*                     array                         |
-*                 Public macros                     |
----------------------------------------------------*/
-// Get the number of variable arguments
-#define META_ARG_COUNT(...) INTERNAL_META_ARG_COUNT(__VA_ARGS__)
-// Get the number of array
-#define META_ARRAY_COUNT(array) META_ARG_COUNT(META_ARRAY_ELEMS(array))
-// Get the subarray of an array(0 ~ count)
-#define META_SUB_ARRAY(count, array) INTERNAL_META_RESERVE(count, META_ARRAY_ELEMS(array))
+#define INTERNAL_META_ARGS_INDEX_0(_0, ...) _0
+#define INTERNAL_META_ARGS_INDEX_1(_0, _1, ...) _1
+#define INTERNAL_META_ARGS_INDEX_2(_0, _1, _2, ...) _2

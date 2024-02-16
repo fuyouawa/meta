@@ -1,10 +1,26 @@
 #pragma once
 #include <meta/macro/array.hpp>
+/*--------------------------------------------------
+*                    Foreach                        |
+*                 Public macros                     |
+---------------------------------------------------*/
+
+// Foreach macro
+// 
+// Example:
+//	#define P(i, arg) printf("%d: %s", i, arg);
+// 
+//	META_FOREACH(P, "First", "Second") expand to...
+//	printf("%d: %s", 1, "First"); printf("%d: %s", 2, "Second"););
+#define META_FOREACH(f, args) INTERNAL_META_FOREACH(f, META_REMOVE_PARAM(args))
+
+
 
 /*--------------------------------------------------
 *                    Foreach                        |
 *            Internal macros(Dont use!)             |
 ---------------------------------------------------*/
+
 #define INTERNAL_META_FORRACH_0(f,o) 
 #define INTERNAL_META_FORRACH_1(f,arg,...)  META_EXPAND(INTERNAL_META_FORRACH_0(f,__VA_ARGS__)) f(0,arg)
 #define INTERNAL_META_FORRACH_2(f,arg,...)  META_EXPAND(INTERNAL_META_FORRACH_1(f,__VA_ARGS__)) f(1,arg) 
@@ -73,20 +89,3 @@
 
 #define INTERNAL_META_FOREACH(f, ...) \
 		META_CAT(INTERNAL_META_FORRACH_, META_ARG_COUNT(__VA_ARGS__))(f, __VA_ARGS__)
-
-
-/*--------------------------------------------------
-*                    Foreach                        |
-*                 Public macros                     |
----------------------------------------------------*/
-
-// Foreach macro
-// 
-// Example:
-//	#define printf_macro(i, arg) printf("%d: %s", i, arg);
-//	META_FOREACH(printf_macro, "First", "Second")
-//	-> printf("%d: %s", 2, "First"); printf("%d: %s", 1, "Second"););
-// 
-// Look out:
-//	i is in reverse order!
-#define META_FOREACH(f, args) INTERNAL_META_FOREACH(f, META_REMOVE_PARAM(args))
