@@ -25,7 +25,6 @@
 // (...) -> ...
 #define META_REMOVE_PARAM(p) INTERNAL_META_REMOVE_PARAM(p)
 
-
 /*--------------------------------------------------
 *                     Basic                         |
 *            Internal macros(Dont use!)             |
