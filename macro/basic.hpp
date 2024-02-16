@@ -24,7 +24,6 @@
 
 // (...) -> ...
 #define META_REMOVE_PARAM(p) INTERNAL_META_REMOVE_PARAM(p)
-#define META_ARRAY_ELEMS(p) META_REMOVE_PARAM(p)
 
 
 /*--------------------------------------------------
