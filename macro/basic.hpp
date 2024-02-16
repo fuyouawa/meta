@@ -1,5 +1,6 @@
 #pragma once
 /*--------------------------------------------------
+*                     Basic                         |
 *            Internal macros(Dont use!)             |
 ---------------------------------------------------*/
 // Internal for META_COMPL
@@ -13,12 +14,14 @@
 #define INTERNAL_META_IS_EMPTY_0 INTERNAL_META_PROBE()
 // Internal for META_IS_PAREN
 #define INTERNAL_META_IS_PAREN_PROBE(...) INTERNAL_META_PROBE()
-
+// Internal for META_NOT
 #define INTERNAL_META_NOT_0 INTERNAL_META_PROBE()
-
+// Internal for META_REMOVE_PARAM
+#define INTERNAL_META_REMOVE_PARAM(p) META_EXPAND p
 
 /*--------------------------------------------------
-*                   Public macros                   |
+*                     Basic                         |
+*                 Public macros                     |
 ---------------------------------------------------*/
 // Concatenate macros
 #define META_PRIMITIVE_CAT(l, r) l ## r
@@ -26,6 +29,7 @@
 #define META_CAT(l, r) META_PRIMITIVE_CAT(l, r)
 
 #define META_EXPAND(...) __VA_ARGS__
+#define META_EMPTY(...)
 
 // 1 -> 0; 0 -> 1
 #define META_COMPL(x) META_PRIMITIVE_CAT(INTERNAL_META_COMPL_, x)
@@ -36,3 +40,7 @@
 
 #define META_IS_EMPTY(x) INTERNAL_META_CHECK(META_CAT(META_PRIMITIVE_CAT(INTERNAL_META_IS_EMPTY_, x), 0))
 #define META_IS_PAREN(x) INTERNAL_META_CHECK(INTERNAL_META_IS_PAREN_PROBE x)
+
+// (...) -> ...
+#define META_REMOVE_PARAM(p) INTERNAL_META_REMOVE_PARAM(p)
+#define META_ARRAY_ELEMS(p) META_REMOVE_PARAM(p)
