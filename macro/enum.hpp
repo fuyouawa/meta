@@ -11,7 +11,7 @@
 // Example:
 // META_SEQ_ENUM((x)(y)(z)) expand to...
 // x, y, z
-#define META_SEQ_ENUM(seq) META_CAT(INTERNAL_META_SEQ_ENUM_, META_SEQ_SIZE(seq)) seq
+#define META_SEQ_ENUM(seq) INTERNAL_META_SEQ_ENUM(seq)
 
 
 /*--------------------------------------------------
@@ -86,6 +86,7 @@
 # define INTERNAL_META_SEQ_ENUM_63(...) __VA_ARGS__, INTERNAL_META_SEQ_ENUM_62
 # define INTERNAL_META_SEQ_ENUM_64(...) __VA_ARGS__, INTERNAL_META_SEQ_ENUM_63
 
+#define INTERNAL_META_SEQ_ENUM(seq) META_CAT(INTERNAL_META_SEQ_ENUM_, META_SEQ_SIZE(seq)) seq
 
 // Internal for META_SEQ_SIZE
 # define INTERNAL_META_SEQ_SIZE_0(_) INTERNAL_META_SEQ_SIZE_1
