@@ -4,7 +4,11 @@
 *                 Public macros                     |
 ---------------------------------------------------*/
 
+// expand 243 count
+#define META_EVAL(...) INTERNAL_META_EVAL(__VA_ARGS__)
+
 #define META_EXPAND(...)		__VA_ARGS__
+
 #define META_EMPTY(...)
 
 #define META_CHECK(...)			META_EXPAND(INTERNAL_META_GET_SEC(__VA_ARGS__, 0))
@@ -34,7 +38,9 @@
 // META_IF_ELSE(condition)( True branch )( False branch )
 #define META_IF_ELSE(cond)		INTERNAL_META_IF_ELSE(cond)
 // META_IF(condition)( True branch )
-#define META_IF(cond)			META_IF_ELSE(META_NOT(cond))() 
+#define META_IF(cond)			META_IF_ELSE(META_NOT(cond))()
+
+#define META_DEFER(x) x META_EMPTY()
 
 /*--------------------------------------------------
 *                     Basic                         |
@@ -58,3 +64,10 @@
 #define INTERNAL_META_IF_ELSE_HELPER_1(...) __VA_ARGS__ INTERNAL_META_IF_ELSE_ELSE_1
 #define INTERNAL_META_IF_ELSE_HELPER_0(...)			    INTERNAL_META_IF_ELSE_ELSE_0
 #define INTERNAL_META_IF_ELSE(cond) META_CAT(INTERNAL_META_IF_ELSE_HELPER_, META_BOOL(cond))
+
+#define INTERNAL_META_EVAL(...)  INTERNAL_META_EVAL_1(INTERNAL_META_EVAL_1(INTERNAL_META_EVAL_1(__VA_ARGS__)))
+#define INTERNAL_META_EVAL_1(...) INTERNAL_META_EVAL_2(INTERNAL_META_EVAL_2(INTERNAL_META_EVAL_2(__VA_ARGS__)))
+#define INTERNAL_META_EVAL_2(...) INTERNAL_META_EVAL_3(INTERNAL_META_EVAL_3(INTERNAL_META_EVAL_3(__VA_ARGS__)))
+#define INTERNAL_META_EVAL_3(...) INTERNAL_META_EVAL_4(INTERNAL_META_EVAL_4(INTERNAL_META_EVAL_4(__VA_ARGS__)))
+#define INTERNAL_META_EVAL_4(...) INTERNAL_META_EVAL_5(INTERNAL_META_EVAL_5(INTERNAL_META_EVAL_5(__VA_ARGS__)))
+#define INTERNAL_META_EVAL_5(...) __VA_ARGS__
