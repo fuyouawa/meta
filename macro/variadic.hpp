@@ -1,6 +1,5 @@
 #pragma once
 #include <meta/macro/basic.hpp>
-#include <meta/macro/arithmetic.hpp>
 
 /*--------------------------------------------------
 *                     variadic                      |
@@ -11,10 +10,9 @@
 #define META_COUNT(...) INTERNAL_META_COUNT(__VA_ARGS__)
 
 #define META_RESERVE(n, ...) INTERNAL_META_RESERVE(n, __VA_ARGS__)
-#define META_REMOVE_LAST(...) INTERNAL_META_REMOVE_LAST(__VA_ARGS__)
+#define META_REMOVE_LAST(...) META_RESERVE(META_DEC(META_COUNT(__VA_ARGS__)), __VA_ARGS__)
 
 #define META_INDEX(i, ...) INTERNAL_META_INDEX(i, __VA_ARGS__)
-#define META_INDEX_BY_1(i, ...) INTERNAL_META_INDEX_BY_1(i, __VA_ARGS__)
 
 #define META_INDEX_IS_END(i, ...) META_EQUAL(META_INC(i), META_COUNT(__VA_ARGS__))
 #define META_INDEX_IS_BEGIN(i, ...) META_EQUAL(i, 0)
@@ -36,7 +34,7 @@
 	_50, _51, _52, _53, _54, _55, _56, _57, _58, _59, \
 	_60, _61, _62, _63, _64, N, ...) N
 
-#define INTERNAL_META_COUNT(...) META_EXPAND2(INTERNAL_META_COUNT_IMPL(0, ##__VA_ARGS__,\
+#define INTERNAL_META_COUNT(...) META_EXPAND(INTERNAL_META_COUNT_IMPL(0, ##__VA_ARGS__,\
 	64, 63, 62, 61, 60, \
 	59, 58, 57, 56, 55, 54, 53, 52, 51, 50, \
 	49, 48, 47, 46, 45, 44, 43, 42, 41, 40, \
@@ -46,284 +44,22 @@
 	 9,  8,  7,  6,  5,  4,  3,  2,  1,  0))
 
 
+// Internal for META_INDEX
+#define INTERNAL_META_INDEX_IMPL(target_i, i, ...) META_CAT(INTERNAL_META_INDEX_IMPL_, META_EQUAL(i, target_i))(target_i, i, __VA_ARGS__)
+#define INTERNAL_META_INDEX_IMPL_0(target_i, i, x, ...)  META_DEFER(INTERNAL_META_INDEX_IMPL_I)()(target_i, META_INC(i), __VA_ARGS__)
+#define INTERNAL_META_INDEX_IMPL_1(target_i, i, x, ...) x
+#define INTERNAL_META_INDEX_IMPL_I() INTERNAL_META_INDEX_IMPL
 
-// Internal for META_RESERVE
-#define INTERNAL_META_RESERVE_0(...)
-#define INTERNAL_META_RESERVE_1(x, ...) x
-#define INTERNAL_META_RESERVE_2(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_1(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_3(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_2(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_4(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_3(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_5(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_4(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_6(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_5(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_7(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_6(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_8(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_7(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_9(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_8(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_10(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_9(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_11(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_10(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_12(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_11(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_13(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_12(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_14(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_13(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_15(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_14(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_16(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_15(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_17(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_16(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_18(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_17(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_19(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_18(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_20(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_19(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_21(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_20(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_22(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_21(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_23(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_22(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_24(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_23(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_25(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_24(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_26(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_25(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_27(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_26(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_28(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_27(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_29(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_28(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_30(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_29(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_31(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_30(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_32(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_31(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_33(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_32(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_34(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_33(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_35(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_34(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_36(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_35(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_37(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_36(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_38(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_37(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_39(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_38(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_40(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_39(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_41(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_40(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_42(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_41(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_43(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_42(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_44(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_43(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_45(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_44(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_46(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_45(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_47(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_46(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_48(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_47(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_49(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_48(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_50(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_49(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_51(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_50(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_52(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_51(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_53(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_52(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_54(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_53(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_55(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_54(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_56(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_55(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_57(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_56(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_58(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_57(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_59(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_58(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_60(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_59(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_61(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_60(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_62(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_61(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_63(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_62(__VA_ARGS__))
-#define INTERNAL_META_RESERVE_64(x, ...) x, META_EXPAND2(INTERNAL_META_RESERVE_63(__VA_ARGS__))
+#define INTERNAL_META_INDEX(target_i, ...) META_EVAL2(INTERNAL_META_INDEX_IMPL(target_i, 0, __VA_ARGS__))
 
-#define INTERNAL_META_RESERVE(n, ...) \
-	META_EXPAND2(META_CAT(INTERNAL_META_RESERVE_, n)(__VA_ARGS__))
+#define INTERNAL_META_RESERVE_IMPL(i, ...) META_INDEX(i, __VA_ARGS__)
+#define INTERNAL_META_RESERVE(n, ...) META_FOR(INTERNAL_META_RESERVE_IMPL, n, __VA_ARGS__)
 
-// Internal for META_REMOVE_LAST
-#define INTERNAL_META_REMOVE_LAST_0()
-#define INTERNAL_META_REMOVE_LAST_1(n)
-#define INTERNAL_META_REMOVE_LAST_2(n, ...) n
-#define INTERNAL_META_REMOVE_LAST_3(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_2(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_4(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_3(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_5(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_4(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_6(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_5(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_7(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_6(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_8(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_7(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_9(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_8(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_10(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_9(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_11(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_10(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_12(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_11(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_13(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_12(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_14(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_13(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_15(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_14(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_16(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_15(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_17(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_16(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_18(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_17(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_19(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_18(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_20(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_19(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_21(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_20(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_22(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_21(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_23(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_22(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_24(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_23(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_25(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_24(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_26(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_25(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_27(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_26(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_28(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_27(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_29(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_28(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_30(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_29(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_31(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_30(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_32(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_31(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_33(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_32(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_34(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_33(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_35(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_34(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_36(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_35(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_37(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_36(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_38(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_37(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_39(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_38(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_40(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_39(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_41(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_40(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_42(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_41(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_43(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_42(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_44(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_43(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_45(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_44(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_46(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_45(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_47(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_46(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_48(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_47(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_49(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_48(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_50(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_49(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_51(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_50(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_52(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_51(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_53(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_52(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_54(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_53(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_55(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_54(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_56(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_55(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_57(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_56(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_58(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_57(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_59(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_58(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_60(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_59(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_61(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_60(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_62(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_61(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_63(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_62(__VA_ARGS__))
-#define INTERNAL_META_REMOVE_LAST_64(n, ...) n, META_EXPAND2(INTERNAL_META_REMOVE_LAST_63(__VA_ARGS__))
-
-#define INTERNAL_META_REMOVE_LAST(...) \
-	META_EXPAND2(META_CAT(INTERNAL_META_REMOVE_LAST_, META_COUNT(__VA_ARGS__))(__VA_ARGS__))
-
-
-
-// Internal for META_ARGS_INDEX
-#define INTERNAL_META_INDEX_0(_0, ...) _0
-#define INTERNAL_META_INDEX_1(_0, _1, ...) _1
-#define INTERNAL_META_INDEX_2(_0, _1, _2, ...) _2
-#define INTERNAL_META_INDEX_3(_0, _1, _2, _3, ...) _3
-#define INTERNAL_META_INDEX_4(_0, _1, _2, _3, _4, ...) _4
-#define INTERNAL_META_INDEX_5(_0, _1, _2, _3, _4, _5, ...) _5
-#define INTERNAL_META_INDEX_6(_0, _1, _2, _3, _4, _5, _6, ...) _6
-#define INTERNAL_META_INDEX_7(_0, _1, _2, _3, _4, _5, _6, _7, ...) _7
-#define INTERNAL_META_INDEX_8(_0, _1, _2, _3, _4, _5, _6, _7, _8, ...) _8
-#define INTERNAL_META_INDEX_9(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, ...) _9
-#define INTERNAL_META_INDEX_10(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, ...) _10
-#define INTERNAL_META_INDEX_11(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, ...) _11
-#define INTERNAL_META_INDEX_12(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, ...) _12
-#define INTERNAL_META_INDEX_13(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, ...) _13
-#define INTERNAL_META_INDEX_14(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, ...) _14
-#define INTERNAL_META_INDEX_15(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, ...) _15
-#define INTERNAL_META_INDEX_16(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, ...) _16
-#define INTERNAL_META_INDEX_17(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, ...) _17
-#define INTERNAL_META_INDEX_18(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, ...) _18
-#define INTERNAL_META_INDEX_19(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, ...) _19
-#define INTERNAL_META_INDEX_20(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, ...) _20
-#define INTERNAL_META_INDEX_21(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, ...) _21
-#define INTERNAL_META_INDEX_22(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, ...) _22
-#define INTERNAL_META_INDEX_23(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, ...) _23
-#define INTERNAL_META_INDEX_24(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, ...) _24
-#define INTERNAL_META_INDEX_25(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, ...) _25
-#define INTERNAL_META_INDEX_26(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, ...) _26
-#define INTERNAL_META_INDEX_27(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, ...) _27
-#define INTERNAL_META_INDEX_28(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, ...) _28
-#define INTERNAL_META_INDEX_29(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, ...) _29
-#define INTERNAL_META_INDEX_30(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, ...) _30
-#define INTERNAL_META_INDEX_31(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, ...) _31
-#define INTERNAL_META_INDEX_32(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, ...) _32
-#define INTERNAL_META_INDEX_33(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, ...) _33
-#define INTERNAL_META_INDEX_34(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, ...) _34
-#define INTERNAL_META_INDEX_35(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, ...) _35
-#define INTERNAL_META_INDEX_36(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, ...) _36
-#define INTERNAL_META_INDEX_37(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, ...) _37
-#define INTERNAL_META_INDEX_38(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, ...) _38
-#define INTERNAL_META_INDEX_39(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, ...) _39
-#define INTERNAL_META_INDEX_40(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, ...) _40
-#define INTERNAL_META_INDEX_41(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, ...) _41
-#define INTERNAL_META_INDEX_42(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, ...) _42
-#define INTERNAL_META_INDEX_43(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, ...) _43
-#define INTERNAL_META_INDEX_44(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, ...) _44
-#define INTERNAL_META_INDEX_45(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, ...) _45
-#define INTERNAL_META_INDEX_46(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, ...) _46
-#define INTERNAL_META_INDEX_47(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, ...) _47
-#define INTERNAL_META_INDEX_48(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, ...) _48
-#define INTERNAL_META_INDEX_49(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, ...) _49
-#define INTERNAL_META_INDEX_50(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, ...) _50
-#define INTERNAL_META_INDEX_51(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, ...) _51
-#define INTERNAL_META_INDEX_52(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, ...) _52
-#define INTERNAL_META_INDEX_53(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, ...) _53
-#define INTERNAL_META_INDEX_54(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, ...) _54
-#define INTERNAL_META_INDEX_55(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, ...) _55
-#define INTERNAL_META_INDEX_56(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, ...) _56
-#define INTERNAL_META_INDEX_57(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, ...) _57
-#define INTERNAL_META_INDEX_58(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, ...) _58
-#define INTERNAL_META_INDEX_59(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, _59, ...) _59
-#define INTERNAL_META_INDEX_60(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, _59, _60, ...) _60
-#define INTERNAL_META_INDEX_61(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, _59, _60, _61, ...) _61
-#define INTERNAL_META_INDEX_62(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, _59, _60, _61, _62, ...) _62
-#define INTERNAL_META_INDEX_63(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, _59, _60, _61, _62, _63, ...) _63
-#define INTERNAL_META_INDEX_64(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, _59, _60, _61, _62, _63, _64, ...) _64
-
-#define INTERNAL_META_INDEX(i, ...) META_EXPAND2(META_CAT(INTERNAL_META_INDEX_, i)(__VA_ARGS__))
-
-
-// Internal for META_ARGS_INDEX_BY_1
-#define INTERNAL_META_INDEX_BY_1_1(_1, ...) _1
-#define INTERNAL_META_INDEX_BY_1_2(_1, _2, ...) _2
-#define INTERNAL_META_INDEX_BY_1_3(_1, _2, _3, ...) _3
-#define INTERNAL_META_INDEX_BY_1_4(_1, _2, _3, _4, ...) _4
-#define INTERNAL_META_INDEX_BY_1_5(_1, _2, _3, _4, _5, ...) _5
-#define INTERNAL_META_INDEX_BY_1_6(_1, _2, _3, _4, _5, _6, ...) _6
-#define INTERNAL_META_INDEX_BY_1_7(_1, _2, _3, _4, _5, _6, _7, ...) _7
-#define INTERNAL_META_INDEX_BY_1_8(_1, _2, _3, _4, _5, _6, _7, _8, ...) _8
-#define INTERNAL_META_INDEX_BY_1_9(_1, _2, _3, _4, _5, _6, _7, _8, _9, ...) _9
-#define INTERNAL_META_INDEX_BY_1_10(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, ...) _10
-#define INTERNAL_META_INDEX_BY_1_11(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, ...) _11
-#define INTERNAL_META_INDEX_BY_1_12(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, ...) _12
-#define INTERNAL_META_INDEX_BY_1_13(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, ...) _13
-#define INTERNAL_META_INDEX_BY_1_14(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, ...) _14
-#define INTERNAL_META_INDEX_BY_1_15(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, ...) _15
-#define INTERNAL_META_INDEX_BY_1_16(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, ...) _16
-#define INTERNAL_META_INDEX_BY_1_17(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, ...) _17
-#define INTERNAL_META_INDEX_BY_1_18(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, ...) _18
-#define INTERNAL_META_INDEX_BY_1_19(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, ...) _19
-#define INTERNAL_META_INDEX_BY_1_20(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, ...) _20
-#define INTERNAL_META_INDEX_BY_1_21(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, ...) _21
-#define INTERNAL_META_INDEX_BY_1_22(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, ...) _22
-#define INTERNAL_META_INDEX_BY_1_23(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, ...) _23
-#define INTERNAL_META_INDEX_BY_1_24(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, ...) _24
-#define INTERNAL_META_INDEX_BY_1_25(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, ...) _25
-#define INTERNAL_META_INDEX_BY_1_26(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, ...) _26
-#define INTERNAL_META_INDEX_BY_1_27(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, ...) _27
-#define INTERNAL_META_INDEX_BY_1_28(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, ...) _28
-#define INTERNAL_META_INDEX_BY_1_29(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, ...) _29
-#define INTERNAL_META_INDEX_BY_1_30(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, ...) _30
-#define INTERNAL_META_INDEX_BY_1_31(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, ...) _31
-#define INTERNAL_META_INDEX_BY_1_32(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, ...) _32
-#define INTERNAL_META_INDEX_BY_1_33(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, ...) _33
-#define INTERNAL_META_INDEX_BY_1_34(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, ...) _34
-#define INTERNAL_META_INDEX_BY_1_35(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, ...) _35
-#define INTERNAL_META_INDEX_BY_1_36(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, ...) _36
-#define INTERNAL_META_INDEX_BY_1_37(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, ...) _37
-#define INTERNAL_META_INDEX_BY_1_38(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, ...) _38
-#define INTERNAL_META_INDEX_BY_1_39(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, ...) _39
-#define INTERNAL_META_INDEX_BY_1_40(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, ...) _40
-#define INTERNAL_META_INDEX_BY_1_41(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, ...) _41
-#define INTERNAL_META_INDEX_BY_1_42(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, ...) _42
-#define INTERNAL_META_INDEX_BY_1_43(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, ...) _43
-#define INTERNAL_META_INDEX_BY_1_44(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, ...) _44
-#define INTERNAL_META_INDEX_BY_1_45(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, ...) _45
-#define INTERNAL_META_INDEX_BY_1_46(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, ...) _46
-#define INTERNAL_META_INDEX_BY_1_47(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, ...) _47
-#define INTERNAL_META_INDEX_BY_1_48(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, ...) _48
-#define INTERNAL_META_INDEX_BY_1_49(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, ...) _49
-#define INTERNAL_META_INDEX_BY_1_50(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, ...) _50
-#define INTERNAL_META_INDEX_BY_1_51(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, ...) _51
-#define INTERNAL_META_INDEX_BY_1_52(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, ...) _52
-#define INTERNAL_META_INDEX_BY_1_53(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, ...) _53
-#define INTERNAL_META_INDEX_BY_1_54(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, ...) _54
-#define INTERNAL_META_INDEX_BY_1_55(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, ...) _55
-#define INTERNAL_META_INDEX_BY_1_56(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, ...) _56
-#define INTERNAL_META_INDEX_BY_1_57(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, ...) _57
-#define INTERNAL_META_INDEX_BY_1_58(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, ...) _58
-#define INTERNAL_META_INDEX_BY_1_59(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, _59, ...) _59
-#define INTERNAL_META_INDEX_BY_1_60(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, _59, _60, ...) _60
-#define INTERNAL_META_INDEX_BY_1_61(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, _59, _60, _61, ...) _61
-#define INTERNAL_META_INDEX_BY_1_62(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, _59, _60, _61, _62, ...) _62
-#define INTERNAL_META_INDEX_BY_1_63(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, _59, _60, _61, _62, _63, ...) _63
-#define INTERNAL_META_INDEX_BY_1_64(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, _59, _60, _61, _62, _63, _64, ...) _64
-#define INTERNAL_META_INDEX_BY_1_64(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, _59, _60, _61, _62, _63, _64, _65, ...) _65
-
-#define INTERNAL_META_INDEX_BY_1(i, ...) META_EXPAND2(META_CAT(INTERNAL_META_INDEX_BY_1_, i)(__VA_ARGS__))
+//TODO META_FOREACH
+//#define INTERNAL_META_FOREACH_IMPL(i, f, ...) f(i, )
+//
+//#define INTERNAL_META_FOREACH(f, ...) META_FOR(INTERNAL_META_FOREACH_IMPL, META_COUNT(__VA_ARGS__), f, __VA_ARGS__)
+//
+//#define MM(i, x) i
+//
+//INTERNAL_META_FOREACH(MM, 1, 2, 3)
