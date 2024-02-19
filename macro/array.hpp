@@ -1,5 +1,5 @@
 #pragma once
-#include <meta/macro/variadic.hpp>
+#include <meta/macro/basic.hpp>
 /*--------------------------------------------------
 *                     array                         |
 *                 Public macros                     |

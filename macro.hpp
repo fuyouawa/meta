@@ -1,7 +1,5 @@
 #pragma once
 #include <meta/macro/array.hpp>
-#include <meta/macro/enum.hpp>
-#include <meta/macro/for.hpp>
 
 
 /*--------------------------------------------------
