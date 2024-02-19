@@ -3,6 +3,7 @@
 #include <meta/macro/basic/increment.hpp>
 #include <meta/macro/basic/decrement.hpp>
 #include <meta/macro/basic/equal.hpp>
+#include <meta/macro/basic/while.hpp>
 
 /*--------------------------------------------------
 *                     Basic                         |
@@ -15,13 +16,15 @@
 //	f: Function(Macro) called in each iteration of the loop
 //	n: Number of iterations in the loop
 //	va_args: User data passed to f(parameter 1)
-#define META_FOR(f, n, ...)			INTERNAL_META_FOR(f, n, __VA_ARGS__)
+#define META_FOR(f, n, ...)			META_WHILE(f, INTERNAL_META_FOR_COND, META_DEC(n), __VA_ARGS__)
 // Used in nested calls of META_FOR
-#define META_FOR2(f, n, ...)		INTERNAL_META_FOR(f, n, __VA_ARGS__)
-// Used in internal(You'd better not use it)
-#define META_FOR3(f, n, ...)		INTERNAL_META_FOR(f, n, __VA_ARGS__)
+#define META_FOR2(f, n, ...)		META_WHILE2(f, INTERNAL_META_FOR_COND, META_DEC(n), __VA_ARGS__)
+// Used in nested calls of META_FOR2
+#define META_FOR3(f, n, ...)		META_WHILE3(f, INTERNAL_META_FOR_COND, META_DEC(n), __VA_ARGS__)
+// Used in nested calls of META_FOR3
+#define META_FOR4(f, n, ...)		META_WHILE4(f, INTERNAL_META_FOR_COND, META_DEC(n), __VA_ARGS__)
 
-#define META_FOREACH(f, ...)		INTERNAL_META_FOREACH(f, __VA_ARGS__)
+#define META_FOREACH(f, ...)		META_FOR(INTERNAL_META_FOREACH_IMPL, META_COUNT(__VA_ARGS__), f, __VA_ARGS__)
 
 // Get the number of variable arguments
 #define META_COUNT(...)				INTERNAL_META_COUNT(__VA_ARGS__)
@@ -42,29 +45,13 @@
 *            Internal macros(Dont use!)             |
 ---------------------------------------------------*/
 
-// Internal for META_FOR
-#define INTERNAL_META_FOR_IMPL(f, n, i, ...) META_CAT(INTERNAL_META_FOR_IMPL_, META_EQUAL(i, n))(f, n, i, __VA_ARGS__)
-#define INTERNAL_META_FOR_IMPL_0(f, n, i, ...) f(i, __VA_ARGS__) META_DEFER(INTERNAL_META_FOR_IMPL_I)()(f, n, META_INC(i), __VA_ARGS__)
-#define INTERNAL_META_FOR_IMPL_1(f, n, i, ...) f(i, __VA_ARGS__)
-#define INTERNAL_META_FOR_IMPL_I() INTERNAL_META_FOR_IMPL
+#define INTERNAL_META_FOR_COND(i, n) META_EQUAL(i, n)
 
-#define INTERNAL_META_FOR(f, n, ...) META_EVAL(INTERNAL_META_FOR_IMPL(f, META_DEC(n), 0, __VA_ARGS__))
-
-// Internal for META_FOR2
-#define INTERNAL_META_FOR2_IMPL(f, n, i, ...) META_CAT(INTERNAL_META_FOR2_IMPL_, META_EQUAL(i, n))(f, n, i, __VA_ARGS__)
-#define INTERNAL_META_FOR2_IMPL_0(f, n, i, ...) f(i, __VA_ARGS__) META_DEFER(INTERNAL_META_FOR2_IMPL_I)()(f, n, META_INC(i), __VA_ARGS__)
-#define INTERNAL_META_FOR2_IMPL_1(f, n, i, ...) f(i, __VA_ARGS__)
-#define INTERNAL_META_FOR2_IMPL_I() INTERNAL_META_FOR2_IMPL
-
-#define INTERNAL_META_FOR2(f, n, ...) META_EVAL(INTERNAL_META_FOR2_IMPL(f, META_DEC(n), 0, __VA_ARGS__))
-
-// Internal for META_FOR3
-#define INTERNAL_META_FOR3_IMPL(f, n, i, ...) META_CAT(INTERNAL_META_FOR3_IMPL_, META_EQUAL(i, n))(f, n, i, __VA_ARGS__)
-#define INTERNAL_META_FOR3_IMPL_0(f, n, i, ...) f(i, __VA_ARGS__) META_DEFER(INTERNAL_META_FOR3_IMPL_I)()(f, n, META_INC(i), __VA_ARGS__)
-#define INTERNAL_META_FOR3_IMPL_1(f, n, i, ...) f(i, __VA_ARGS__)
-#define INTERNAL_META_FOR3_IMPL_I() INTERNAL_META_FOR3_IMPL
-
-#define INTERNAL_META_FOR3(f, n, ...) META_EVAL(INTERNAL_META_FOR3_IMPL(f, META_DEC(n), 0, __VA_ARGS__))
+// Use in internal
+#define SYS_META_FOR(f, n, ...)			SYS_META_WHILE(f, INTERNAL_META_FOR_COND, META_DEC(n), __VA_ARGS__)
+#define SYS_META_FOR2(f, n, ...)		SYS_META_WHILE2(f, INTERNAL_META_FOR_COND, META_DEC(n), __VA_ARGS__)
+#define SYS_META_FOR3(f, n, ...)		SYS_META_WHILE3(f, INTERNAL_META_FOR_COND, META_DEC(n), __VA_ARGS__)
+#define SYS_META_FOR4(f, n, ...)		SYS_META_WHILE4(f, INTERNAL_META_FOR_COND, META_DEC(n), __VA_ARGS__)
 
 // Internal for META_COUNT
 #define INTERNAL_META_COUNT_IMPL(\
@@ -96,10 +83,7 @@
 
 // Internal for META_RESERVE
 #define INTERNAL_META_RESERVE_IMPL(i, ...) META_INDEX(i, __VA_ARGS__)
-#define INTERNAL_META_RESERVE(n, ...) META_FOR3(INTERNAL_META_RESERVE_IMPL, n, __VA_ARGS__)
+#define INTERNAL_META_RESERVE(n, ...) SYS_META_FOR(INTERNAL_META_RESERVE_IMPL, n, __VA_ARGS__)
 
 // Internal for META_FOREACH
-#define INTERNAL_META_FOREACH_IMPL_I(i, f, ...) f(i, META_INDEX(i, __VA_ARGS__))
-#define INTERNAL_META_FOREACH_IMPL(i, ...) META_EXPAND(INTERNAL_META_FOREACH_IMPL_I(i, __VA_ARGS__))
-
-#define INTERNAL_META_FOREACH(f, ...) META_FOR3(INTERNAL_META_FOREACH_IMPL, META_COUNT(__VA_ARGS__), f, __VA_ARGS__)
+#define INTERNAL_META_FOREACH_IMPL(i, f, ...) f(i, META_INDEX(i, __VA_ARGS__))
