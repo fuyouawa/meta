@@ -1,16 +1,11 @@
 #pragma once
 #include <meta/macro/basic/primitive.hpp>
 
-/*--------------------------------------------------
-*                     Equal                         |
-*                 Public macros                     |
----------------------------------------------------*/
 #define META_EQUAL(x, y) INTERNAL_META_EQUAL(x, y)
 #define META_NOT_EQUAL(x, y) META_NOT(META_EQUAL(x, y))
 
 
 /*--------------------------------------------------
-*                     Equal                         |
 *            Internal macros(Dont use!)             |
 ---------------------------------------------------*/
 

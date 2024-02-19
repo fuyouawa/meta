@@ -1,15 +1,10 @@
 #pragma once
-/*--------------------------------------------------
-*                   Increment                       |
-*                 Public macros                     |
----------------------------------------------------*/
 
 // increment(0~64)
 #define META_INC(n) INTERNAL_META_INC(n)
 
 
 /*--------------------------------------------------
-*                   Increment                       |
 *            Internal macros(Dont use!)             |
 ---------------------------------------------------*/
 // Internal for META_INC

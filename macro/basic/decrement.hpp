@@ -1,17 +1,10 @@
 #pragma once
 
-/*--------------------------------------------------
-*                   Decrement                       |
-*                 Public macros                     |
----------------------------------------------------*/
-
 // decrement(0~64)
 #define META_DEC(n) INTERNAL_META_DEC(n)
 
 
-
 /*--------------------------------------------------
-*                   Decrement                       |
 *            Internal macros(Dont use!)             |
 ---------------------------------------------------*/
 // Internal for META_DEC

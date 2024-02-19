@@ -1,13 +1,4 @@
 #pragma once
-/*--------------------------------------------------
-*                   Primitive                       |
-*                 Public macros                     |
----------------------------------------------------*/
-
-// expand 243 count
-#define META_EVAL(...)			INTERNAL_META_EVAL(__VA_ARGS__)
-// avoid painted-blue(use in internal, You'd better not use it)
-#define META_EVAL2(...)			INTERNAL_META_EVAL2(__VA_ARGS__)
 
 #define META_EXPAND(...)		__VA_ARGS__
 
@@ -44,8 +35,10 @@
 
 #define META_DEFER(x) x META_EMPTY()
 
+
+
+
 /*--------------------------------------------------
-*                   Primitive                       |
 *            Internal macros(Dont use!)             |
 ---------------------------------------------------*/
 
@@ -66,14 +59,3 @@
 #define INTERNAL_META_IF_ELSE_HELPER_1(...) __VA_ARGS__ INTERNAL_META_IF_ELSE_ELSE_1
 #define INTERNAL_META_IF_ELSE_HELPER_0(...)			    INTERNAL_META_IF_ELSE_ELSE_0
 #define INTERNAL_META_IF_ELSE(cond) META_CAT(INTERNAL_META_IF_ELSE_HELPER_, META_BOOL(cond))
-
-#define INTERNAL_META_EVAL(...)  INTERNAL_META_EVAL_1(INTERNAL_META_EVAL_1(INTERNAL_META_EVAL_1(__VA_ARGS__)))
-#define INTERNAL_META_EVAL_1(...) INTERNAL_META_EVAL_2(INTERNAL_META_EVAL_2(INTERNAL_META_EVAL_2(__VA_ARGS__)))
-#define INTERNAL_META_EVAL_2(...) INTERNAL_META_EVAL_3(INTERNAL_META_EVAL_3(INTERNAL_META_EVAL_3(__VA_ARGS__)))
-#define INTERNAL_META_EVAL_3(...) INTERNAL_META_EVAL_4(INTERNAL_META_EVAL_4(INTERNAL_META_EVAL_4(__VA_ARGS__)))
-#define INTERNAL_META_EVAL_4(...) INTERNAL_META_EVAL_5(INTERNAL_META_EVAL_5(INTERNAL_META_EVAL_5(__VA_ARGS__)))
-#define INTERNAL_META_EVAL_5(...) __VA_ARGS__
-
-#define INTERNAL_META_EVAL2(...)  INTERNAL_META_EVAL2_1(INTERNAL_META_EVAL2_1(INTERNAL_META_EVAL2_1(__VA_ARGS__)))
-#define INTERNAL_META_EVAL2_1(...) INTERNAL_META_EVAL2_2(INTERNAL_META_EVAL2_2(INTERNAL_META_EVAL2_2(__VA_ARGS__)))
-#define INTERNAL_META_EVAL2_2(...) __VA_ARGS__
