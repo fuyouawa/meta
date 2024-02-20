@@ -1,25 +1,14 @@
 #pragma once
-#include <meta/macro/array.hpp>
-
-
-///*--------------------------------------------------
-//*                   Synthetic                       |
-//*                 Public macros                     |
-//---------------------------------------------------*/
-//
-//// (...)anything -> ...
-//#define META_GET_PARAM_RELAX(p) INTERNAL_META_REMOVE_PARAM_RELAX(p)
-//
-//
-///*--------------------------------------------------
-//*                   Synthetic                       |
-//*            Internal macros(Dont use!)             |
-//---------------------------------------------------*/
-//
-//// Internal for META_GET_PARAM_RELAX
-//#define INTERNAL_META_REMOVE_PARAM_RELAX_HELPER(...) __VA_ARGS__,
-//#define INTERNAL_META_REMOVE_PARAM_RELAX_I(...) META_EXPAND(META_ARRAY_REMOVE_LAST((__VA_ARGS__)))
-//#define INTERNAL_META_REMOVE_PARAM_RELAX(p)			\
-//	INTERNAL_META_REMOVE_PARAM_RELAX_I(				\
-//		INTERNAL_META_REMOVE_PARAM_RELAX_HELPER p	\
-//)
+#include <meta/macro/basic/equal.hpp>
+#include <meta/macro/basic/eval.hpp>
+#include <meta/macro/basic/if.hpp>
+#include <meta/macro/basic/primitive.hpp>
+#include <meta/macro/loop/for.hpp>
+#include <meta/macro/loop/foreach.hpp>
+#include <meta/macro/loop/while.hpp>
+#include <meta/macro/va_args/count.hpp>
+#include <meta/macro/va_args/index.hpp>
+#include <meta/macro/va_args/pop_back.hpp>
+#include <meta/macro/va_args/pop_front.hpp>
+#include <meta/macro/va_args/reserve.hpp>
+#include <meta/macro/va_args/sub_args.hpp>
