@@ -1,5 +1,6 @@
 #pragma once
 #include <meta/macro/arithmetic/increment.hpp>
+#include <meta/macro/arithmetic/decrement.hpp>
 #include <meta/macro/arithmetic/sub.hpp>
 
 #define META_FOR(f, beg, end, ...) INTERNAL_META_FOR(f, beg, end, __VA_ARGS__)
@@ -540,4 +541,4 @@
 #define META_CAT(l, r)			META_PRIMITIVE_CAT(l, r)
 
 #define INTERNAL_META_FOR2_I(f, i, n, ...) META_CAT(INTERNAL_META_FOR2_, n)(f, i, __VA_ARGS__)
-#define INTERNAL_META_FOR2(f, beg, end, ...) INTERNAL_META_FOR2_I(f, beg, META_SUB(end, beg), __VA_ARGS__)
+#define INTERNAL_META_FOR2(f, beg, end, ...) INTERNAL_META_FOR2_I(f, beg, META_SUB(META_DEC(end), beg), __VA_ARGS__)

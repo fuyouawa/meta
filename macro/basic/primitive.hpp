@@ -22,13 +22,10 @@
 
 #define META_IS_PAREN(x)		META_CHECK(INTERNAL_META_IS_PAREN x)
 
-
-// (...) -> ...
-#define META_GET_PARAM(p)		META_EXPAND p
-// (...)anything -> anything
-#define META_REMOVE_PARAM(p)	META_EMPTY p
-
 #define META_DEFER(x) x META_EMPTY()
+
+#define META_PACK(...) (__VA_ARGS__)
+#define META_UNPACK(x) META_EXPAND x
 
 
 

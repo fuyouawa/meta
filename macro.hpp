@@ -12,3 +12,4 @@
 #include <meta/macro/va_args/pop_front.hpp>
 #include <meta/macro/va_args/reserve.hpp>
 #include <meta/macro/va_args/sub_args.hpp>
+#include <meta/macro/va_args/to_string.hpp>
