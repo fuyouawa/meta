@@ -1,6 +1,5 @@
 #pragma once
 
-// decrement(0~64)
 #define META_DEC(n) INTERNAL_META_DEC(n)
 
 
@@ -8,7 +7,7 @@
 *            Internal macros(Dont use!)             |
 ---------------------------------------------------*/
 // Internal for META_DEC
-#define INTERNAL_META_DEC_0 -1
+#define INTERNAL_META_DEC_0 0
 # define INTERNAL_META_DEC_1 0
 # define INTERNAL_META_DEC_2 1
 # define INTERNAL_META_DEC_3 2
