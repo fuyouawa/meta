@@ -1,11 +1,13 @@
 #pragma once
+#include <meta/macro/basic.hpp>
 
-#define META_INDEX(i, ...) META_EXPAND(META_CAT(_META_INDEX_,i)(__VA_ARGS__))
-#define META_END(...) META_INDEX(META_DEC(META_COUNT(__VA_ARGS__)), __VA_ARGS__)
-#define META_BEGIN(...) META_INDEX(0, __VA_ARGS__)
+#define META_INDEX(i, ...)				META_EXPAND(META_CAT(_META_INDEX_,i)(__VA_ARGS__))
+#define META_END(...)					META_INDEX(META_DEC(META_COUNT(__VA_ARGS__)), __VA_ARGS__)
+#define META_BEGIN(...)					META_INDEX(0, __VA_ARGS__)
 
-#define META_INDEX_IS_END(i, ...)	META_EQUAL(META_INC(i), META_COUNT(__VA_ARGS__))
-#define META_INDEX_IS_BEGIN(i, ...) META_EQUAL(i, 0)
+#define META_INDEX_IS_END(i, ...)		META_EQUAL(META_INC(i), META_COUNT(__VA_ARGS__))
+#define META_INDEX_IS_NOT_END(i, ...)	META_NOT(META_INDEX_IS_END(i, __VA_ARGS__))
+#define META_INDEX_IS_BEGIN(i, ...)		META_EQUAL(i, 0)
 
 /*--------------------------------------------------
 *            Internal macros(Dont use!)             |

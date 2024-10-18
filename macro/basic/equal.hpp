@@ -1,13 +1,15 @@
 #pragma once
 #include <meta/macro/basic/primitive.hpp>
 
-#define META_EQUAL(x, y) META_CHECK(META_CAT(META_CAT(_META_EQUAL_, x)##_, y))
+#define META_EQUAL(x, y) _META_EQUAL(x, y)
 #define META_NOT_EQUAL(x, y) META_NOT(META_EQUAL(x, y))
 
 
 /*--------------------------------------------------
 *            Internal macros(Dont use!)             |
 ---------------------------------------------------*/
+
+#define _META_EQUAL(x, y) META_CHECK(_META_EQUAL_ ## x ## _ ## y)
 
 // Internal for META_EQUAL
 #define _META_EQUAL_0_0 META_CHECK_TRUE
