@@ -1,6 +1,7 @@
 #pragma once
+#include <meta/macro/basic.hpp>
 
-#define META_DEC(n) _META_DEC(n)
+#define META_DEC(n) META_CAT(_META_DEC_, n)
 
 
 /*--------------------------------------------------
@@ -265,8 +266,3 @@
 # define _META_DEC_255 254
 # define _META_DEC_256 255
 # define _META_DEC_257 256
-
-#define META_PRIMITIVE_CAT(l, r) l ## r
-#define META_CAT(l, r) META_PRIMITIVE_CAT(l, r)
-
-#define _META_DEC(n) META_CAT(_META_DEC_, n)

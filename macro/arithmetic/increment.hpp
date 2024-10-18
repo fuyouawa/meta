@@ -1,7 +1,8 @@
 #pragma once
+#include <meta/macro/basic.hpp>
 
-// increment(0~64)
-#define META_INC(n) _META_INC(n)
+// increment(0~255)
+#define META_INC(n) META_CAT(_META_INC_, n)
 
 
 /*--------------------------------------------------
@@ -264,9 +265,3 @@
 # define _META_INC_253 254
 # define _META_INC_254 255
 # define _META_INC_255 256
-# define _META_INC_256 256
-
-#define META_PRIMITIVE_CAT(l, r) l ## r
-#define META_CAT(l, r) META_PRIMITIVE_CAT(l, r)
-
-#define _META_INC(n) META_CAT(_META_INC_, n)

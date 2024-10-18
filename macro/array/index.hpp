@@ -1,10 +1,6 @@
 #pragma once
-#include <meta/macro/basic/equal.hpp>
-#include <meta/macro/arithmetic/increment.hpp>
-#include <meta/macro/arithmetic/decrement.hpp>
-#include <meta/macro/va_args/count.hpp>
 
-#define META_INDEX(i, ...) _META_INDEX(i, __VA_ARGS__)
+#define META_INDEX(i, ...) META_EXPAND(META_CAT(_META_INDEX_,i)(__VA_ARGS__))
 #define META_END(...) META_INDEX(META_DEC(META_COUNT(__VA_ARGS__)), __VA_ARGS__)
 #define META_BEGIN(...) META_INDEX(0, __VA_ARGS__)
 
@@ -271,9 +267,3 @@
 #define _META_INDEX_253(x, ...) META_EXPAND(_META_INDEX_252(__VA_ARGS__))
 #define _META_INDEX_254(x, ...) META_EXPAND(_META_INDEX_253(__VA_ARGS__))
 #define _META_INDEX_255(x, ...) META_EXPAND(_META_INDEX_254(__VA_ARGS__))
-
-
-#define META_PRIMITIVE_CAT(l, r) l ## r
-#define META_CAT(l, r) META_PRIMITIVE_CAT(l, r)
-
-#define _META_INDEX(i, ...) META_EXPAND(META_CAT(_META_INDEX_,i)(__VA_ARGS__))

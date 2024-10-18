@@ -1,8 +1,7 @@
 #pragma once
-#include <meta/macro/va_args/count.hpp>
+#include <meta/macro/basic.hpp>
 
-#define META_POP_BACK(...) _META_POP_BACK(__VA_ARGS__)
-
+#define META_POP_BACK(...) META_EXPAND(META_CAT(_META_POP_BACK_, META_COUNT(__VA_ARGS__))(__VA_ARGS__))
 
 
 /*--------------------------------------------------
@@ -269,8 +268,3 @@
 #define _META_POP_BACK_254(x, ...) x, META_EXPAND(_META_POP_BACK_253(__VA_ARGS__))
 #define _META_POP_BACK_255(x, ...) x, META_EXPAND(_META_POP_BACK_254(__VA_ARGS__))
 #define _META_POP_BACK_256(x, ...) x, META_EXPAND(_META_POP_BACK_255(__VA_ARGS__))
-
-#define META_PRIMITIVE_CAT(l, r) l ## r
-#define META_CAT(l, r) META_PRIMITIVE_CAT(l, r)
-
-#define _META_POP_BACK(...) META_EXPAND(META_CAT(_META_POP_BACK_, META_COUNT(__VA_ARGS__))(__VA_ARGS__))

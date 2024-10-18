@@ -1,8 +1,5 @@
 #pragma once
-#include <meta/macro/basic/primitive.hpp>
-#include <meta/macro/arithmetic/increment.hpp>
-#include <meta/macro/arithmetic/decrement.hpp>
-#include <meta/macro/basic/eval.hpp>
+#include <meta/macro/arithmetic.hpp>
 
 #define META_WHILE(f, cond, cond_data, ...) _META_WHILE(f, cond, cond_data, __VA_ARGS__)
 #define META_WHILE_EX(n, f, cond, cond_data, ...) _META_WHILE_EX(n, f, cond, cond_data, __VA_ARGS__)

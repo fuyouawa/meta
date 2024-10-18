@@ -1,13 +1,12 @@
 #pragma once
+#include <meta/macro/basic.hpp>
 
-#define META_RESERVE(n, ...) _META_RESERVE(n, __VA_ARGS__)
+#define META_RESERVE(n, ...) META_CAT(_META_RESERVE_,n)(__VA_ARGS__)
 
 
 /*--------------------------------------------------
 *            Internal macros(Dont use!)             |
 ---------------------------------------------------*/
-
-#define META_EXPAND(...) __VA_ARGS__
 
 #define _META_RESERVE_0(...)
 #define _META_RESERVE_1(x, ...) x
@@ -265,8 +264,3 @@
 #define _META_RESERVE_253(x, ...) x, META_EXPAND(_META_RESERVE_252(__VA_ARGS__))
 #define _META_RESERVE_254(x, ...) x, META_EXPAND(_META_RESERVE_253(__VA_ARGS__))
 #define _META_RESERVE_255(x, ...) x, META_EXPAND(_META_RESERVE_254(__VA_ARGS__))
-
-#define META_PRIMITIVE_CAT(l, r) l ## r
-#define META_CAT(l, r) META_PRIMITIVE_CAT(l, r)
-
-#define _META_RESERVE(n, ...) META_CAT(_META_RESERVE_,n)(__VA_ARGS__)

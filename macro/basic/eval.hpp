@@ -1,14 +1,13 @@
 #pragma once
+#include <meta/macro/basic/primitive.hpp>
 
-#define META_EVAL(n, ...) _META_EVAL(n, __VA_ARGS__)
-
-
-
+#define META_EVAL(n, ...) META_CAT(_META_EVAL_, n)(__VA_ARGS__)
 
 /*--------------------------------------------------
 *            Internal macros(Dont use!)             |
 ---------------------------------------------------*/
 
+#define _META_EVAL_0()
 #define _META_EVAL_1(...) __VA_ARGS__
 #define _META_EVAL_2(...) _META_EVAL_1(__VA_ARGS__)
 #define _META_EVAL_3(...) _META_EVAL_2(__VA_ARGS__)
@@ -265,5 +264,3 @@
 #define _META_EVAL_254(...) _META_EVAL_253(__VA_ARGS__)
 #define _META_EVAL_255(...) _META_EVAL_254(__VA_ARGS__)
 #define _META_EVAL_256(...) _META_EVAL_255(__VA_ARGS__)
-
-#define _META_EVAL(n, ...) _META_EVAL_##n(__VA_ARGS__)

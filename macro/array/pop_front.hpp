@@ -1,15 +1,11 @@
 #pragma once
+#include <meta/macro/basic.hpp>
 
-#define META_POP_FRONT_N(n, ...) _META_POP_FRONT_N(n, __VA_ARGS__)
+#define META_POP_FRONT_N(n, ...) META_CAT(_META_POP_FRONT_N_, n)(__VA_ARGS__)
 
 /*--------------------------------------------------
 *            Internal macros(Dont use!)             |
 ---------------------------------------------------*/
-
-#define META_EXPAND(...) __VA_ARGS__
-
-#define META_PRIMITIVE_CAT(l, r) l ## r
-#define META_CAT(l, r) META_PRIMITIVE_CAT(l, r)
 
 #define _META_POP_FRONT_I(x, ...) __VA_ARGS__
 #define _META_POP_FRONT(...) META_EXPAND(_META_POP_FRONT_I(__VA_ARGS__))
@@ -271,5 +267,3 @@
 #define _META_POP_FRONT_N_254(...) _META_POP_FRONT(_META_POP_FRONT_N_253(__VA_ARGS__))
 #define _META_POP_FRONT_N_255(...) _META_POP_FRONT(_META_POP_FRONT_N_254(__VA_ARGS__))
 #define _META_POP_FRONT_N_256(...) _META_POP_FRONT(_META_POP_FRONT_N_255(__VA_ARGS__))
-
-#define _META_POP_FRONT_N(n, ...) META_CAT(_META_POP_FRONT_N_, n)(__VA_ARGS__)

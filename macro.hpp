@@ -1,17 +1,6 @@
 #pragma once
-#include <meta/macro/basic/equal.hpp>
-#include <meta/macro/basic/eval.hpp>
-#include <meta/macro/basic/if.hpp>
-#include <meta/macro/basic/primitive.hpp>
-#include <meta/macro/loop/for.hpp>
-#include <meta/macro/loop/foreach.hpp>
-#include <meta/macro/loop/while.hpp>
-#include <meta/macro/va_args/count.hpp>
-#include <meta/macro/va_args/index.hpp>
-#include <meta/macro/va_args/pop_back.hpp>
-#include <meta/macro/va_args/pop_front.hpp>
-#include <meta/macro/va_args/reserve.hpp>
-#include <meta/macro/va_args/sub_args.hpp>
-#include <meta/macro/va_args/to_string.hpp>
-#include <meta/macro/arithmetic/add.hpp>
-#include <meta/macro/arithmetic/sub.hpp>
+
+#include <meta/macro/basic.hpp>
+#include <meta/macro/arithmetic.hpp>
+#include <meta/macro/loop.hpp>
+#include <meta/macro/array.hpp>

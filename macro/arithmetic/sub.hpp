@@ -1,7 +1,7 @@
 #pragma once
 #include <meta/macro/arithmetic/decrement.hpp>
 
-#define META_SUB(x, y) _META_SUB(x, y)
+#define META_SUB(x, y) META_CAT(_META_SUB_,y)(x)
 
 
 /*--------------------------------------------------
@@ -264,8 +264,3 @@
 #define _META_SUB_253(x) _META_SUB_252(META_DEC(x))
 #define _META_SUB_254(x) _META_SUB_253(META_DEC(x))
 #define _META_SUB_255(x) _META_SUB_254(META_DEC(x))
-
-#define META_PRIMITIVE_CAT(l, r) l ## r
-#define META_CAT(l, r) META_PRIMITIVE_CAT(l, r)
-
-#define _META_SUB(x, y) META_CAT(_META_SUB_,y)(x)

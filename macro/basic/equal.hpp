@@ -1,7 +1,7 @@
 #pragma once
 #include <meta/macro/basic/primitive.hpp>
 
-#define META_EQUAL(x, y) _META_EQUAL(x, y)
+#define META_EQUAL(x, y) META_CHECK(META_CAT(META_CAT(_META_EQUAL_, x)##_, y))
 #define META_NOT_EQUAL(x, y) META_NOT(META_EQUAL(x, y))
 
 
@@ -267,5 +267,3 @@
 #define _META_EQUAL_254_254 META_CHECK_TRUE
 #define _META_EQUAL_255_255 META_CHECK_TRUE
 #define _META_EQUAL_256_256 META_CHECK_TRUE
-
-#define _META_EQUAL(x, y) META_CHECK(_META_EQUAL_##x##_##y)
