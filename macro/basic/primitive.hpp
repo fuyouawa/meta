@@ -31,8 +31,10 @@
 
 #define META_PACK(...)              (__VA_ARGS__)
 #define META_UNPACK(x)              META_EXPAND x
+// (x) another -> another
+#define META_EMPTY_PACK(x)			META_EMPTY x
 
-// Get the number of variable arguments
+// 获取可变参数的数量
 #define META_COUNT(...)             _META_COUNT(__VA_ARGS__)
 
 #define META_IS_EMPTY(...)		    META_IS_1(META_CHECK(META_CAT(META_PRIMITIVE_CAT(_META_IS_EMPTY_, __VA_ARGS__), 0)))

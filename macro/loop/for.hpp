@@ -1,6 +1,7 @@
 #pragma once
 #include <meta/macro/arithmetic.hpp>
 
+// 遍历可变参数
 #define META_FOR(f, beg, end, ...) _META_FOR(f, beg, META_SUB(end, beg), __VA_ARGS__)
 
 /*--------------------------------------------------
