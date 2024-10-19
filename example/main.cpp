@@ -11,12 +11,19 @@
 // 生成一个逗号, 直到__VA_ARGS__末尾不生成
 #define COMMON_IF_NOT_END(i, ...) META_NOT_IF(META_INDEX_IS_END(i, __VA_ARGS__), COMMON_IF_TRUE)
 
+#define FIELD_TO_CONST_REF_DECL_I(x) const x&
+// 假设这里x是(float) kk，所以后面展开就是 FIELD_TO_CONST_REF_DECL_I (float) kk
+// FIELD_TO_CONST_REF_DECL_I (float)会被识别成宏调用，把float作为参数传入
+// 于是就得到了const float&的结果
+// 然后在加上后面的kk，就组成了const float& kk
+#define FIELD_TO_CONST_REF_DECL(x) FIELD_TO_CONST_REF_DECL_I x
+
 // 生成构造函数的参数声明, 以及默认参数
 // 参数 i: 类似for的索引
 // 参数 __VA_ARGS__: (TYPE) NAME格式的字段声明列表
 // (CTOR_ARGS_DECL_WITH_DEFAULT的META_FOR循环代码)
 #define CTOR_ARGS_DECL_WITH_DEFAULT_IMPL(i, ...) \
-	META_UNPACK(META_INDEX(i, __VA_ARGS__)) = {} COMMON_IF_NOT_END(i, __VA_ARGS__)
+	FIELD_TO_CONST_REF_DECL(META_INDEX(i, __VA_ARGS__)) = {} COMMON_IF_NOT_END(i, __VA_ARGS__)
 
 // 字段声明转构造函数字段初始化(第二步)
 // 参数 field_name: 字段名称
