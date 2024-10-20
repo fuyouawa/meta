@@ -25,7 +25,6 @@
 #define META_BOOL(x)			    META_COMPL(META_NOT(x))
 #define META_IS_1(x)			    META_CHECK(META_CAT(_META_IS_1_, x), 0)
 
-#define META_IS_PAREN(x)		    META_CHECK(_META_IS_PAREN x)
 
 #define META_DEFER(x)               x META_EMPTY()
 
@@ -33,6 +32,15 @@
 #define META_UNPACK(x)              META_EXPAND x
 // (x) another -> another
 #define META_EMPTY_PACK(x)			META_EMPTY x
+
+// (anything)another -> (anything)
+#define META_EXTRACT_PAREN(x)       _META_EXTRACT_PAREN_I(_META_EXTRACT_PAREN x)
+// (anything)another -> anything
+#define META_EXTRACT_PAREN_UNPACK(x) META_UNPACK(META_EXTRACT_PAREN(x))
+
+// (anything)another -> 1
+// else -> 0
+#define META_IS_PAREN(x)		    _META_IS_PAREN(META_EXTRACT_PAREN(x))
 
 // 获取可变参数的数量
 #define META_COUNT(...)             _META_COUNT(__VA_ARGS__)
@@ -50,10 +58,16 @@
 // Internal for META_COMPL
 #define _META_COMPL_0 1
 #define _META_COMPL_1 0
+
 // Internal for META_IS_PAREN
-#define _META_IS_PAREN(...) META_CHECK_TRUE
+#define _META_IS_PAREN_CHECK(...) META_CHECK_TRUE
+#define _META_IS_PAREN(x) META_CHECK(_META_IS_PAREN_CHECK x)
+
 // Internal for META_NOT
 #define _META_NOT_IS_0 META_CHECK_TRUE
+
+#define _META_EXTRACT_PAREN_I(...) META_EXPAND(META_GET_FST(__VA_ARGS__))
+#define _META_EXTRACT_PAREN(x) (x),
 
 #define _META_IS_1_1 META_CHECK_TRUE
 #define _META_IS_EMPTY_0 META_CHECK_TRUE
