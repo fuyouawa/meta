@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <meta/macro.hpp>
+#include <unordered_map>
 
 // 生成一个逗号
 // (由COMMON_IF_NOT_END调用)
@@ -149,8 +150,8 @@ DEF(SDD, PKK::kPPS, (float) sss, (int) kkp, (char) ssd)
 
 int main()
 {
-	SDD sss{ 1.0f, 122 };
-	ForeachMetaFieldData(sss, [&](auto field_data) {
-		std::cout << "Name:" << field_data.name() << " - Value:" << field_data.value(sss) << std::endl;
-		});
+	//SDD sss{ 1.0f, 122 };
+	//ForeachMetaFieldData(sss, [&](auto field_data) {
+	//	std::cout << "Name:" << field_data.name() << " - Value:" << field_data.value(sss) << std::endl;
+	//	});
 }
